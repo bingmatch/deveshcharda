@@ -5,24 +5,64 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Devesh Misra</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/mustard-ui@latest/dist/css/mustard-ui.min.css">
 </head>
+<style>
+    #app {
+        padding: 10px;
+    }
+    button {
+        margin: 20px;
+    }
+    img{
+        width: 50%;
+        border-radius: 15px;
+    }
+</style>
 <body>
     <div id="app">
-        <ul class="list-group">
-            <li v-for="responder in responders.data">{{ responder.userReference }}</li>
-        </ul>
+        <div v-if="!isHidden" class="list-group">
+            <button class="button-primary-outlined button-round" @click='vidd(value)' v-for="(value, key) in results">{{ key }}</button>
+        </div>
+        <button class="button-primary button-round" @click='backk()' v-if="isHidden">back</button>
+        <div style="position: relative;" v-if="isHidden" class="video-group">
+            <a target="_blank" style="width: 50%; float: left;padding: 20px;" :href="value['video_url']" class="vid-card .col-lg-6" v-for="(value, key) in viddm['Payload']">
+                <p class="title">{{value['video_title']}}</p>
+                <img :src="value['video_image_url']">
+            </a>
+        </div>
     </div>
 </body>
 <script>
-    new Vue({
-  el: '#app',
+    const url = "https://alkansanights.github.io/deveshcharda/json/";
 
-  data() {
-    return {
-      //...
-    }
-  },
-})
+const vm = new Vue({
+        el: '#app',
+        data: {
+          results: [],
+          viddm: [],
+          isHidden: false,
+        }, 
+        methods: {
+            vidd(jim) {
+                this.isHidden = true;
+            axios.get(url+jim+".json").then(response => {
+            this.viddm = response.data
+          })
+        },
+        backk(){
+            this.isHidden = false;
+        }
+    },
+        mounted() {
+          axios.get(url+"master.json").then(response => {
+            this.results = response.data
+          })
+        }
+      });
 </script>
 </html>
