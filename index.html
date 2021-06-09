@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="https://alkansanights.github.io/deveshcharda/manifest.webmanifest">
+    <link rel="manifest" href="https://bingmatch.github.io/deveshcharda/manifest.webmanifest">
     <title>Devesh Misra</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
@@ -31,7 +31,7 @@
         </div>
         <button class="button-primary button-round" @click='backk()' v-if="isHidden">back</button>
         <div style="position: relative;" v-if="isHidden" class="video-group">
-            <a target="_blank" style="width: 50%; float: left;padding: 20px;" :href="value['video_url']" class="vid-card .col-lg-6" v-for="(value, key) in viddm['Payload']">
+            <a target="_blank" style="width: 50%; float: left;padding: 20px;" rel="noreferrer" :href="value['video_url']" class="vid-card .col-lg-6" v-for="(value, key) in viddm['Payload']">
                 <p class="title">{{value['video_title']}}</p>
                 <img :src="value['video_image_url']">
             </a>
@@ -39,7 +39,7 @@
     </div>
 </body>
 <script>
-    const url = "https://alkansanights.github.io/deveshcharda/json/";
+    const url = "https://bingmatch.github.io/deveshcharda/json/";
 
 const vm = new Vue({
         el: '#app',
