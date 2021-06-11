@@ -1,84 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link media="print" onload="this.media='all'" rel="manifest" href="https://bingmatch.github.io/deveshcharda/manifest.webmanifest">
-    <title>Devesh Misra</title>
-    <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12" media="none" data-async="true"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js" media="none" data-async="true"></script>
-    <link media="print" onload="this.media='all'" rel="stylesheet" href="https://unpkg.com/mustard-ui@latest/dist/css/mustard-ui.min.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link media="print" onload="this.media='all'" rel="manifest"
+    href="https://bingmatch.github.io/deveshcharda/manifest.webmanifest">
+  <title>Devesh Misra</title>
+  <link rel="stylesheet" media="print" onload="this.media='all'"
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12" media="none" data-async="true"></script> -->
+  <script src="./vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js" media="none" data-async="true"></script>
+  <link media="print" onload="this.media='all'" rel="stylesheet"
+    href="https://unpkg.com/mustard-ui@latest/dist/css/mustard-ui.min.css">
 </head>
 <style>
-    #app {
-        padding: 10px;
-    }
-    button {
-        margin: 20px;
-    }
-    img{
-        width: 50%;
-        border-radius: 15px;
-    }
+  #app {
+    padding: 10px;
+  }
+
+  button {
+    margin: 20px;
+  }
+
+  img {
+    width: 50%;
+    border-radius: 15px;
+  }
 </style>
+
 <body>
-    <div id="app">
-        <div v-if="!isHidden" class="list-group">
-            <button class="button-primary-outlined button-round" @click='vidd(value)' v-for="(value, key) in results">{{ key }}</button>
-        </div>
-        <button class="button-primary button-round" @click='backk()' v-if="isHidden">back</button>
-        <div style="position: relative;" v-if="isHidden" class="video-group">
-            <a target="_blank" style="width: 50%; float: left;padding: 20px;" rel="noreferrer" :href="value['video_url']" class="vid-card .col-lg-6" v-for="(value, key) in viddm['Payload']">
-                <p class="title">{{value['video_title']}}</p>
-                <img :src="value['video_image_url']">
-            </a>
-        </div>
+  <div id="app">
+    <button class="button-primary button-round" @click='Vbackk()'>{{ csection }}</button>
+    <div v-if="!isVHidden">
+      <div v-if="!isHidden" class="list-group">
+        <button class="button-primary-outlined button-round" @click='vidd(value)' v-for="(value, key) in results">{{ key
+          }}</button>
+      </div>
+      <button style="
+      position: fixed;
+      right: 0px;
+      top: 15px;
+  " class="button-primary button-round" @click='backk()' v-if="isHidden">back</button>
+      <div style="position: relative;" v-if="isHidden" class="video-group">
+        <a target="_blank" style="width: 50%; float: left;padding: 20px;" rel="noreferrer" :href="value['video_url']"
+          class="vid-card .col-lg-6" v-for="(value, key) in viddm['Payload']">
+          <p class="title">{{value['video_title']}}</p>
+          <img :src="value['video_image_url']">
+        </a>
+      </div>
     </div>
+    <div v-if="isVHidden">
+
+      <div v-if="!ismHidden" class="list-group">
+        <button class="button-primary-outlined button-round" @click='savedquest()'>Saved Questions</button>
+        <button class="button-primary-outlined button-round" @click='quest(key)' v-for="(value, key) in mquestl">{{
+          value }}</button>
+      </div>
+      <button style="
+      position: fixed;
+      right: 0px;
+      top: 15px;
+  " class="button-primary button-round" @click='mqbackk()' v-if="ismHidden">back</button>
+      <div v-if="ismHidden" class="Quiz">
+        <div style="text-align: center;" class="container">
+          <h6>
+            {{ cqq["question"] }}
+          </h6>
+          <div v-for="a in cqq['options']">
+            <button class="button-primary-outlined button-round" @click='coorr()'
+              :class="{ 'correct': a['correct'] === 1 }" >{{ a['option'] }}</button>
+          </div>
+          <div>
+            <button class="button-primary button-round" @click='qsubmit()'>Next</button>
+            <button class="button-primary button-round" @click='qsave()'>Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 <script>
-    window.addEventListener('load', e => {
-  new PWAConfApp();
-  registerSW(); 
-});
 
-async function registerSW() { 
-  if ('serviceWorker' in navigator) { 
-    try {
-      await navigator.serviceWorker.register('./sw.js'); 
-    } catch (e) {
-      alert('ServiceWorker registration failed. Sorry about that.'); 
-    }
-  } else {
-    document.querySelector('.alert').removeAttribute('hidden'); 
-  }
-}
-    const url = "https://bingmatch.github.io/deveshcharda/json/";
 
-const vm = new Vue({
-        el: '#app',
-        data: {
-          results: [],
-          viddm: [],
-          isHidden: false,
-        }, 
-        methods: {
-            vidd(jim) {
-                this.isHidden = true;
-            axios.get(url+jim+".json").then(response => {
-            this.viddm = response.data
-          })
-        },
-        backk(){
-            this.isHidden = false;
-        }
+  const url = "https://bingmatch.github.io/deveshcharda/json/";
+  const qurl = "https://bingmatch.github.io/deveshcharda/q/";
+
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      results: [],
+      viddm: [],
+      isHidden: false,
+      isVHidden: false,
+      ismHidden: false,
+      questl: [],
+      mquestl: [],
+      cqq: [],
+      qc: 0,
+      csection: "Questionare"
     },
-        mounted() {
-          axios.get(url+"master.json").then(response => {
-            this.results = response.data
-          })
+    methods: {
+      vidd(jim) {
+        this.isHidden = true;
+        axios.get(url + jim + ".json").then(response => {
+          this.viddm = response.data
+        })
+      },
+      savedquest() {
+        this.qc = 0;
+        this.questl = JSON.parse(localStorage.getItem('qss')) || [];
+          this.cqq = this.questl[0]
+          this.ismHidden = true;
+      },
+      qsubmit() {
+        this.rcoorr()
+        try{
+        this.cqq = this.questl["Payload"][this.qc] }
+        catch(err){
+          this.cqq = this.questl[this.qc]
         }
-      });
+        this.qc += 1;
+      },
+      qsave() {
+        var a = [];
+        a = JSON.parse(localStorage.getItem('qss')) || [];
+        a.push(this.cqq);
+        localStorage.setItem('qss', JSON.stringify(a));
+      },
+      mqbackk() {
+        this.ismHidden = false;
+      },
+      coorr() {
+        var element = document.getElementsByClassName("correct");
+        element[0].classList.add("button-primary");
+        element[0].classList.remove("button-primary-outlined");
+      },
+      rcoorr() {
+        var element = document.getElementsByClassName("correct");
+        element[0].classList.remove("button-primary");
+        element[0].classList.add("button-primary-outlined");
+      },
+      quest(jims) {
+        this.qc = 0;
+        axios.get(qurl + jims + ".json").then(response => {
+          this.questl = response.data
+          this.cqq = this.questl["Payload"][this.qc]
+          this.ismHidden = true;
+        })
+      },
+      mquest() {
+        axios.get(qurl + "question.json").then(response => {
+          this.mquestl = response.data
+        })
+      },
+      Vbackk() {
+        if (this.csection != "Videos") {
+          this.ismHidden = false
+          this.mquest()
+          this.csection = "Videos"
+          this.isVHidden = true
+        }
+        else {
+          this.csection = "Questionnare"
+          this.isVHidden = false
+        }
+      },
+      backk() {
+        this.isHidden = false;
+      }
+    },
+    mounted() {
+      axios.get(url + "master.json").then(response => {
+        this.results = response.data
+      })
+    }
+  });
 </script>
+
 </html>
