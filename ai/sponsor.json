@@ -1,15 +1,13 @@
-{
-	"Sponsors": [{
-			"name": "Superset Solider",
-			"Image": "https://images.pexels.com/photos/2478248/pexels-photo-2478248.jpeg?crop=entropy&cs=srgb&dl=pexels-roberto-nickson-2478248.jpg&fit=crop&fm=jpg&h=426&w=640",
-			"info": "Full Body + weights",
-			"duration": "12 min"
-		},
-		{
-			"name": "Solider",
-			"Image": "https://images.pexels.com/photos/2478248/pexels-photo-2478248.jpeg?crop=entropy&cs=srgb&dl=pexels-roberto-nickson-2478248.jpg&fit=crop&fm=jpg&h=426&w=640",
-			"info": "weights",
-			"duration": "0min"
-		}
-	]
-}
+[{
+		"name": "Superset Solider",
+		"Image": "https://images.pexels.com/photos/2478248/pexels-photo-2478248.jpeg?crop=entropy&cs=srgb&dl=pexels-roberto-nickson-2478248.jpg&fit=crop&fm=jpg&h=426&w=640",
+		"info": "Full Body + weights",
+		"duration": "12 min"
+	},
+	{
+		"name": "Solider",
+		"Image": "https://images.pexels.com/photos/2478248/pexels-photo-2478248.jpeg?crop=entropy&cs=srgb&dl=pexels-roberto-nickson-2478248.jpg&fit=crop&fm=jpg&h=426&w=640",
+		"info": "weights",
+		"duration": "0min"
+	}
+]
